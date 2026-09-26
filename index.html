@@ -12,35 +12,43 @@
             margin: 0;
             overflow: hidden;
         }
+        /* Индикатор для проверки того, обновился ли код на GitHub Pages */
+        #debug-version {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff44;
+            padding: 8px 14px;
+            font-family: monospace;
+            font-size: 14px;
+            z-index: 10000;
+            border-radius: 6px;
+        }
     </style>
 </head>
 <body>
-    <!-- Инициализируем сцену с Face Tracking -->
-    <a-scene mindar-face vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <div id="debug-version">СБОРКА V2: СМЕЩЕНИЕ АКТИВНО</div>
 
+    <a-scene mindar-face vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
         <a-assets>
-            <!-- Загружаем модель усов -->
             <a-asset-item id="mustacheModel" src="./mustache.glb"></a-asset-item>
         </a-assets>
 
         <a-camera active="false" position="0 0 0"></a-camera>
 
-        <!-- Мягкое освещение, чтобы усы не были черным пятном -->
         <a-light type="ambient" color="#FFF" intensity="0.7"></a-light>
         <a-light type="directional" position="0 1 2" intensity="0.8"></a-light>
 
-        <!-- Индекс привязки) -->
+        <!-- Привязка к центру рта (индекс 13) -->
         <a-entity mindar-face-target="anchorIndex: 13">
 
-            <!-- Базовые настройки масштаба и поворота -->
-            <a-gltf-model src="#mustacheModel"
-                          position="0 -0.02 -0.05"
-                          scale="0.03 0.03 0.03"
-                          rotation="0 0 0">
-            </a-gltf-model>
+            <!-- Промежуточный контейнер смещения: двигаем строго вниз на 5 см (Y: -0.05), глубина Z = 0 -->
+            <a-entity position="0 -0.05 0" rotation="0 0 0">
+                <a-gltf-model src="#mustacheModel" scale="0.03 0.03 0.03"></a-gltf-model>
+            </a-entity>
 
         </a-entity>
-
     </a-scene>
 </body>
 </html>
