@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR Задание 3 - Усы</title>
+    <!-- Подключаем A-Frame и MindAR Face Tracking -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Инициализируем сцену с Face Tracking -->
+    <a-scene mindar-face vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+
+        <a-assets>
+            <!-- Загружаем модель усов -->
+            <a-asset-item id="mustacheModel" src="./mustache.glb"></a-asset-item>
+        </a-assets>
+
+        <a-camera active="false" position="0 0 0"></a-camera>
+
+        <!-- Мягкое освещение, чтобы усы не были черным пятном -->
+        <a-light type="ambient" color="#FFF" intensity="0.7"></a-light>
+        <a-light type="directional" position="0 1 2" intensity="0.8"></a-light>
+
+        <!-- ИНДЕКС 164 — это центр верхней губы (идеально для усов) -->
+        <a-entity mindar-face-target="anchorIndex: 164">
+
+            <!-- Базовые настройки масштаба и поворота -->
+            <a-gltf-model src="#mustacheModel"
+                          position="0 0 0.02"
+                          scale="0.08 0.08 0.08"
+                          rotation="0 -90 0">
+            </a-gltf-model>
+
+        </a-entity>
+
+    </a-scene>
+</body>
+</html>
